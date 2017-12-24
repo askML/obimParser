@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>OBIMP Parser</title>
+    <style>
+        .cli {background-color: #e1ffff;}
+        .srv {background-color: #ffffc8;}
+        .cli_srv {background-color: #ff9fe8;}
+        .dir {background-color: #41d00a;}
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <div class="row">
+        <div class="col-12">
+			<h1>OBIMP Parser</h1>
+            <form>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="srvRadio" @click="setText(0)" checked> Srv v1.x - Android
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="srvRadio" @click="setText(1)"> Srv v2.x - Android
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="srvRadio" @click="setText(2)"> Srv v2.x - Desktop Client
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="hexPackages">Packages</label>
+                    <textarea class="form-control" id="hexPackages" rows="3" v-model="hexPackages[index]"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" @click="parse">Parse</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <ol>
+                <li v-for="bex in packages" :class="getPacketType(bex)" style="margin-top: 10px;">
+                    Sequence: {{bex.sequence}} / request: {{bex.request}} / size: {{bex.size}}<br>
+                    type: <span class="badge badge-warning" :title="bex.type">{{getType(bex.type)}}</span>
+                    subtype: <span class="badge badge-warning" :title="bex.subtype">{{getSubtype(bex)}}</span><br>
+                    <pre v-if="!!bex.data"><code>{{bex.data}}</code></pre>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	  integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<script src="https://unpkg.com/vue"></script>
+<script src="./app.js"></script>
+</body>
+</html>
